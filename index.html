@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Sales</title>
+</head>
+<body>
+    <h1>Cookie Sales</h1>
+    <form id="cookieForm">
+        <label for="flavor">Flavor:</label>
+        <input type="text" id="flavor" name="flavor" required>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required>
+
+        <button type="submit">Sell Cookie</button>
+    </form>
+
+    <script>
+        document.getElementById('cookieForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const flavor = document.getElementById('flavor').value;
+            const quantity = document.getElementById('quantity').value;
+
+            fetch('/sell-cookie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ flavor, quantity })
+            })
+            .then(response => response.text())
+            .then(message => alert(message))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
+
